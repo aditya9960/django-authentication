@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
+from django.utils.translation import ugettext_lazy as _
+from os.path import dirname
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -37,6 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # custom adds
+    'django.contrib.sites',
+    'bootstrap4',
+    # custom apps
+    'main',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -52,10 +59,12 @@ MIDDLEWARE_CLASSES = [
 
 ROOT_URLCONF = 'practical.urls'
 
+CONTENT_DIR = os.path.join(BASE_DIR, 'content')
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [ os.path.join(CONTENT_DIR, 'templates'), ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -71,6 +80,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'practical.wsgi.application'
 
 
+SITE_ID = 1
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
@@ -84,7 +94,7 @@ WSGI_APPLICATION = 'practical.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'simple-django-login-and-register',
+        'NAME': 'practical',
         'USER': 'root',
         'PASSWORD': 'password',
         'HOST': 'localhost',
@@ -128,5 +138,9 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
-
+STATIC_ROOT = os.path.join(CONTENT_DIR, 'static')
 STATIC_URL = '/static/'
+
+# media files
+MEDIA_ROOT = os.path.join(CONTENT_DIR, 'media')
+MEDIA_URL = '/media/'
